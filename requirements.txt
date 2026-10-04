@@ -1,0 +1,27 @@
+# Swivel Agent dependencies. All free-tier friendly; no billing required.
+#
+#   pip install -r requirements.txt
+#
+# API keys are NOT installed here -- copy .env.example to .env and fill them in.
+
+# Web server
+fastapi>=0.110
+uvicorn[standard]>=0.27
+
+# AI explanation (free tier: https://aistudio.google.com/apikey)
+google-genai>=1.0
+
+# Voice alerts (free tier: https://elevenlabs.io/app/settings/api-keys)
+elevenlabs>=1.50
+
+# Phone number parsing + country detection
+phonenumbers>=8.13
+
+# Config loading from .env
+python-dotenv>=1.0
+
+# Request validation
+pydantic>=2.0
+
+# Tests
+pytest>=8.0

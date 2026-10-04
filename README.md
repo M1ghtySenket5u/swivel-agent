@@ -36,17 +36,55 @@ Both keys stay on the free tier; billing is not required.
 
 ## Run it
 
-```bash
-pip install fastapi "uvicorn[standard]" google-genai elevenlabs phonenumbers python-dotenv pydantic
-uvicorn swivel_agent.app:app --reload --port 8077
-```
-
-Then open <http://127.0.0.1:8077>.
+### Setup (first time only)
 
 ```bash
-python -m pytest tests/ -q      # 46 tests, no API keys needed
-python scripts/smoke_test.py   # end-to-end, uses real keys
+git clone <your-repo-url> swivel-agent
+cd swivel-agent
+pip install -r requirements.txt      # or: pip install fastapi "uvicorn[standard]" \
+                                       #     google-genai elevenlabs phonenumbers \
+                                       #     python-dotenv pydantic pytest
 ```
+
+**Add your own API keys** — the repo ships with `.env.example`, never real keys:
+
+```bash
+cp .env.example .env
+```
+
+Then open `.env` and fill in:
+
+| Key | Where to get it | Free? |
+|---|---|---|
+| `GEMINI_API_KEY` | <https://aistudio.google.com/apikey> — leave billing **disabled** | yes |
+| `ELEVENLABS_API_KEY` | <https://elevenlabs.io/app/settings/api-keys> | yes (10k credits/mo) |
+
+> ⚠️ **Never commit `.env`.** It is already in `.gitignore`. If you ever paste a key
+> into a tracked file by accident, rotate the key immediately — GitHub's secret
+> scanning may already have flagged it.
+
+### Start the app
+
+```bash
+uvicorn swivel_agent.app:app --reload --port 8086
+```
+
+Then open <http://127.0.0.1:8086>.
+
+Works fully without any keys: the security checks, the curated demo library, and
+the whole UI run offline. Keys only add AI-written explanations and voice.
+
+### Other commands
+
+| What | Command |
+|---|---|
+| Run the tests (no keys needed) | `python -m pytest tests/ -q` |
+| Quick end-to-end demo | `python scripts/smoke_test.py` |
+| Verify the full demo loop | `python scripts/verify_demo.py http://127.0.0.1:8086` |
+| Check API status | `curl http://127.0.0.1:8086/api/health` |
+| Measure offline behaviour | `python scripts/offline_bench.py` |
+
+`scripts/keep_alive.py` restarts the server if it dies (optional, for long demos).
 
 ---
 

@@ -1,6 +1,38 @@
+# ---- Secrets ----
+# Your real API keys live here and must NEVER be committed.
 .env
-__pycache__/
-*.pyc
+.env.*
+!.env.example
+
+# ---- Runtime logs (machine-specific, no value in a repo) ----
+*.log
+server.log
+watchdog.log
+
+# ---- Generated TTS audio (recreated on demand) ----
 _audio/
+**/_audio/
+*.mp3
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
 .pytest_cache/
 .venv/
+venv/
+env/
+
+# ---- Editors / OS ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ---- Misc ----
+*.db
+.cache/
